@@ -31,14 +31,4 @@ A continuación, se explica el propósito y contenido de cada archivo y carpeta 
 
 - **mainMatlab.m**: Archivo en MATLAB encargado de recibir y enviar información entre Python y OPC. Este archivo organiza el flujo de datos para que sea más sencillo de gestionar y analizar.
 
-## Contribuciones
-
-Si deseas contribuir a este proyecto, por favor, sigue los lineamientos establecidos para mantener la integridad del código y la estructura del repositorio.
-
-## Licencia
-
-Este proyecto se comparte bajo la licencia [especificar licencia aquí]. 
-
-¡Gracias por tu interés en este proyecto y por contribuir al desarrollo del conocimiento en el campo de la visión artificial aplicada a la robótica!
-
 
