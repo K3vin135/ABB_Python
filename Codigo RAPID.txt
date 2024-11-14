@@ -1,0 +1,141 @@
+MODULE MainModule
+    ! Definición de variables de posición
+    PERS num x := 0;
+    PERS num y := 0;
+    PERS num z := 0;
+    PERS num coord_x:= 91.7351;
+    PERS num coord_y:= -441.065;
+    PERS num coord_z:= 170;
+    
+    ! Inicialización de la matriz de 5x3 para almacenar las coordenadas de las cajas
+    PERS num boxCoords{5, 3} := [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
+    PERS num numBoxes := 0;  ! Número de cajas
+
+    ! Variables para controlar el movimiento del robot
+    PERS bool moveRobot :=FALSE;
+    PERS bool boxesavaliable := TRUE;
+    PERS bool processing := FALSE;  ! Nueva variable para indicar si el robot está procesando
+
+    ! Definición de la orientación de la herramienta
+    CONST orient oFront := [0.02764, -0.7908, 0.6106, -0.0304];  ! Rotación de 90 grados alrededor del eje Z
+    
+    ! Definición de la configuración del robot
+    CONST confdata cDefault := [0, -1, 0, 1];
+
+    ! Definición de velocidad y zona
+    CONST speeddata vel100 := [100, 500, 5000, 1000];
+    CONST num velreq := 80;
+    CONST speeddata vel15 := [100*(velreq/100), 500*(velreq/100), 5000*(velreq/100), 1000*(velreq/100)];  
+    CONST zonedata finee := [FALSE, 1, 0.1, 0.1, 0.1, 0.1, 0.1];
+
+    ! Variables para almacenar los ángulos de las articulaciones
+    PERS num jointAngle1 := 0;
+    PERS num jointAngle2 := 0;
+    PERS num jointAngle3 := 0;
+    PERS num jointAngle4 := 0;
+    PERS num jointAngle5 := 0;
+    PERS num jointAngle6 := 0;
+
+    PROC main()
+        ! Obtener y guardar los ángulos de las articulaciones
+        GetRobotPosition;
+        ! Verificar si el booleano está en TRUE antes de mover el robot
+        IF moveRobot THEN
+            ! Indicar que el robot está procesando
+            processing := TRUE;
+            ! Verificar el número de cajas
+            CheckNumBoxes;
+            IF boxesavaliable THEN 
+                ! Mover a las posiciones especificadas en la matriz teniendo en cuenta el número de cajas
+                MoveToBoxes;
+                ! Reiniciar las coordenadas de la matriz y de x, y, z a 0
+                ResetCoordinates;
+            ENDIF
+            ! Indicar que el robot ha terminado de procesar
+            processing := FALSE;
+        ENDIF
+    ENDPROC
+
+    PROC CheckNumBoxes()
+        IF numBoxes < 1 THEN
+            TPWrite "Error: numBoxes debe ser al menos 1.";
+            boxesavaliable := FALSE;
+            RETURN;
+        ELSEIF numBoxes > 5 THEN
+            TPWrite "Error: numBoxes no puede ser mayor a 5.";
+            numBoxes := 5;
+            boxesavaliable := TRUE;
+        ELSE
+            boxesavaliable := TRUE;
+        ENDIF
+    ENDPROC
+
+    PROC MoveToBoxes()
+        VAR num i;
+        FOR i FROM 1 TO numBoxes DO
+            ! Asignar coordenadas desde la matriz y llamar al procedimiento MoveToPosition
+            x := boxCoords{i, 1};
+            y := boxCoords{i, 2};
+            z := boxCoords{i, 3};
+
+            ! Validar las coordenadas antes de mover el robot
+            IF ValidateCoordinates(x, y, z) THEN
+                MoveToPosition;
+            ELSE
+                TPWrite "Coordenadas inválidas para la caja " \Num:=i;
+            ENDIF
+        ENDFOR
+    ENDPROC
+
+    PROC MoveToPosition()
+        ! Definición del punto objetivo
+        VAR robtarget target_pos;
+
+        ! Asignación de coordenadas y orientación al punto objetivo
+        target_pos.trans := [x, y, z];
+        target_pos.rot := oFront;
+        target_pos.robconf := cDefault;
+        target_pos.extax := [9E9, 9E9, 9E9, 9E9, 9E9, 9E9];
+
+        ! Verificar si las coordenadas no son [0, 0, 0] antes de mover
+        IF x = 0 AND y = 0 AND z = 0 THEN
+            TPWrite "Coordenadas son [0, 0, 0]. No se moverá el robot.";
+        ELSE
+            ! Mover a la posición objetivo
+            MoveJ target_pos, vel15, finee, MarcadorAzul;
+            WaitTime(2);
+        ENDIF
+    ENDPROC
+
+    FUNC bool ValidateCoordinates(num x, num y, num z)
+        ! Verificar que las coordenadas estén dentro de un rango válido
+        IF (x >= -1000  AND x <= 1000) AND (y >= -1000 AND y <= 1000) AND (z >= 110 AND z <= 1000) THEN
+            RETURN TRUE;
+        ELSE
+            RETURN FALSE;
+        ENDIF
+    ENDFUNC
+
+    PROC GetRobotPosition()
+        ! Variable para almacenar la posición del robot
+        VAR robtarget robot_pos;
+    
+        ! Leer la posición actual del robot
+        robot_pos := CRobT();
+        coord_x := robot_pos.trans.x;
+        coord_y := robot_pos.trans.y;
+        coord_z := robot_pos.trans.z;
+        ! Imprimir las coordenadas x, y, z de la posición del robot
+        TPWrite "Robot position: x=" \Num:=robot_pos.trans.x;
+        TPWrite "Robot position: y=" \Num:=robot_pos.trans.y;
+        TPWrite "Robot position: z=" \Num:=robot_pos.trans.z;
+    ENDPROC
+    
+    PROC ResetCoordinates()
+        ! Reiniciar las coordenadas de la matriz y de x, y, z a 0
+        x := 0;
+        y := 0;
+        z := 0;
+    ENDPROC
+    
+ENDMODULE
