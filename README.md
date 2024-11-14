@@ -1,4 +1,5 @@
-# Sistema de Retroalimentación en el Espacio de Trabajo del Robot ABB por Medio de Tecnologías de Visión Artificial. Autores: Andrés Urrutia y Kevin Varón. Profesor: David Rozo Osorio
+# Sistema de Retroalimentación en el Espacio de Trabajo del Robot ABB por Medio de Tecnologías de Visión Artificial.
+# Autores: Andrés Urrutia y Kevin Varón. Profesor: David Rozo Osorio
 
 Este repositorio de GitHub ha sido creado para compartir con la comunidad estudiantil de la EIA y del mundo el conocimiento adquirido en el desarrollo del trabajo de grado titulado:
 
