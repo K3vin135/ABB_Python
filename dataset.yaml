@@ -1,0 +1,5 @@
+train: C:\Tesis\Yolokv2\Data\train\ # Ruta a las imágenes de entrenamiento
+val: C:\Tesis\Yolokv2\Data\val\ # Ruta a las imágenes de validación
+test: # Ruta a las imágenes de prueba
+nc: 3 # Número de clases
+names: ['BOX','ABB','ABB_BASE'] # Nombres de las clases
