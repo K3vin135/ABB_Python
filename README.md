@@ -1,35 +1,43 @@
-Este GitHub es creado con el fin de compartir con toda la comunidad estudiantil de la EIA
-y del mundo, los conocimientos adquiridos en el desarrollo del trabajo de grado llamado
-"SISTEMA DE RETROALIMENTACIÓN EN EL ESPACIO DE TRABAJO DEL ROBOT ABB POR MEDIO DE TECNOLOGÍAS DE VISIÓN ARTIFICIAL"
+# Sistema de Retroalimentación en el Espacio de Trabajo del Robot ABB por Medio de Tecnologías de Visión Artificial
 
-A continuación se explicarán los diferentes archivos que se pueden encontrar aquí:
+Este repositorio de GitHub ha sido creado para compartir con la comunidad estudiantil de la EIA y del mundo el conocimiento adquirido en el desarrollo del trabajo de grado titulado:
 
-Data: Datos usados para el entrenamiento del modelo de visión artificial usando YOLOv8.
+**"Sistema de Retroalimentación en el Espacio de Trabajo del Robot ABB por Medio de Tecnologías de Visión Artificial"**
 
-imagenes: Carpeta de salida de la aplicación de etiquetado manual. Esta carpeta tiene todas las
-imagenes etiquetadas con su respectivo archivo de texto. De esta carpeta fue de donde se hizo
-manualmente la separación de datos para la carpeta "Data"
+A continuación, se explica el propósito y contenido de cada archivo y carpeta incluidos en este repositorio.
 
-runs/detect: Carpeta de salida creada automaticamente al ejecutar el archivo "ImageValidation.py".
-Esta carpeta contiene la información estadistica del comportamiento del modelo y como se entrenó para
-llegar al output.
+## Contenido del Repositorio
 
-Codigo RAPID: Codigo RAPID usado en la aplicación RoboStudio de ABB para poder ejecutar los 
-diferentes comandos proporcionados desde MATLAB.
+### Carpetas
 
-ImageValidation.py: Codigo python usado para validar el modelo entrenado con una sola imagen especifica.
-image_90.png fue la imagen usada en este codigo.
+- **Data**: Contiene los datos utilizados para el entrenamiento del modelo de visión artificial con YOLOv8.
 
-classes.txt: Archivo en el que se especifican las clases o objetos a diferenciar. Es importante el orden
+- **imagenes**: Carpeta de salida de la aplicación de etiquetado manual. Aquí se encuentran las imágenes etiquetadas junto con sus archivos de texto correspondientes. Esta carpeta fue la base para la separación manual de los datos que se encuentran en la carpeta "Data".
 
-dataset.yaml: Archivo de configuración para el entrenamiento del modelo. En este archivo se especifica la ruta
-de los datos de entrenamiento y evaluación, además de las clases a clasificar.
+- **runs/detect**: Carpeta de salida generada automáticamente al ejecutar el archivo `ImageValidation.py`. Contiene la información estadística sobre el rendimiento del modelo y detalles del proceso de entrenamiento.
 
-main.py: Archivo de python en el que está cargado el modelo de vision artificial, junto con toda la interfaz de usuario
-que habilita la comunicación con matlab igualmente. Este archivo y el archivo de MATLAB trabajan juntos,
-ya que uno analiza y procesa los datos obtenidos de la camara, y la envía a MATLAB que es el mediador
-entre OPC y Python.
+### Archivos
 
-mainMatlab.m: Archivo de MATLAB encargado de la recepción y envío de información de python y OPC. Este archivo recibe 
-información de ambos lados para permitir un flujo más organizado y sencillo de analizar.
+- **Codigo RAPID**: Código RAPID usado en la aplicación RoboStudio de ABB. Este código permite la ejecución de comandos desde MATLAB para el robot ABB.
+
+- **ImageValidation.py**: Código en Python para validar el modelo de visión artificial con una imagen específica (`image_90.png`). Este archivo se utiliza para pruebas puntuales del modelo.
+
+- **classes.txt**: Archivo que especifica las clases u objetos a diferenciar. Es fundamental mantener el orden de las clases en este archivo.
+
+- **dataset.yaml**: Archivo de configuración para el entrenamiento del modelo. Define las rutas de los datos de entrenamiento y evaluación, así como las clases que el modelo debe clasificar.
+
+- **main.py**: Código en Python que carga el modelo de visión artificial y la interfaz de usuario para la comunicación con MATLAB. Este archivo trabaja en conjunto con el archivo de MATLAB (`mainMatlab.m`), facilitando el análisis y procesamiento de datos de la cámara y su envío a MATLAB, que actúa como intermediario entre OPC y Python.
+
+- **mainMatlab.m**: Archivo en MATLAB encargado de recibir y enviar información entre Python y OPC. Este archivo organiza el flujo de datos para que sea más sencillo de gestionar y analizar.
+
+## Contribuciones
+
+Si deseas contribuir a este proyecto, por favor, sigue los lineamientos establecidos para mantener la integridad del código y la estructura del repositorio.
+
+## Licencia
+
+Este proyecto se comparte bajo la licencia [especificar licencia aquí]. 
+
+¡Gracias por tu interés en este proyecto y por contribuir al desarrollo del conocimiento en el campo de la visión artificial aplicada a la robótica!
+
 
